@@ -1,89 +1,16 @@
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        int[] numbers1 = {10, 20, 30};
+        int[] numbers2 = {10, 20, 30};
+        int[] numbers3 = numbers1;
 
-        String[] names = {"커피", "샌드위치", "생수"};
-        int[] prices = {2500, 4500, 1000};
-        int[] quantities = {0, 0, 0};
+        // 1. == 연산자: 메모리 주소(참조)가 같은지 비교
+        System.out.println(numbers1 == numbers2); // false (내부 값은 같지만 서로 다른 객체)
+        System.out.println(numbers1 == numbers3); // true (같은 객체를 가리킴)
 
-        while (true) {
-            System.out.println();
-            System.out.println("===== 학과 행사 간식 주문 키오스크 =====");
-            System.out.println("1. 커피 2,500원");
-            System.out.println("2. 샌드위치 4,500원");
-            System.out.println("3. 생수 1,000원");
-            System.out.println("4. 결제");
-            System.out.println("0. 주문 취소");
-            System.out.print("메뉴 번호 입력: ");
-            int choice = scanner.nextInt();
-
-            if (choice < 0 || choice > 4) {
-                System.out.println("0~4 사이의 메뉴 번호를 입력하세요.");
-                continue;
-            }
-
-            if (choice == 0) {
-                System.out.println("주문을 취소합니다.");
-                scanner.close();
-                return;
-            }
-
-            if (choice == 4) {
-                int totalCount = quantities[0] + quantities[1] + quantities[2];
-                if (totalCount == 0) {
-                    System.out.println("먼저 상품을 선택하세요.");
-                    continue;
-                }
-
-                int total = 0;
-                for (int i = 0; i < 3; i++) {
-                    total += prices[i] * quantities[i];
-                }
-
-                int discountRate = 0;
-                if (total >= 50000) {
-                    discountRate = 10;
-                } else if (total >= 30000) {
-                    discountRate = 5;
-                }
-
-                int discountAmount = total * discountRate / 100;
-                int finalAmount = total - discountAmount;
-
-                System.out.println();
-                System.out.println("===== 영수증 =====");
-                for (int i = 0; i < 3; i++) {
-                    if (quantities[i] > 0) {
-                        int subtotal = prices[i] * quantities[i];
-                        System.out.println(names[i] + " x " + quantities[i] + " = " + subtotal + "원");
-                    }
-                }
-                System.out.println("주문 금액: " + total + "원");
-                System.out.println("할인율: " + discountRate + "%");
-                System.out.println("할인 금액: " + discountAmount + "원");
-                System.out.println("최종 결제 금액: " + finalAmount + "원");
-                System.out.println("결제가 완료되었습니다. 이용해 주셔서 감사합니다.");
-
-                scanner.close();
-                return;
-            }
-
-            int index = choice - 1;
-            int qty;
-            while (true) {
-                System.out.print(names[index] + " 수량 입력: ");
-                qty = scanner.nextInt();
-                if (qty < 1) {
-                    System.out.println("수량은 1개 이상 입력하세요.");
-                    continue;
-                }
-                break;
-            }
-
-            quantities[index] += qty;
-            System.out.println(names[index] + " " + qty + "개가 담겼습니다.");
-        }
+        // 2. Arrays.equals(): 배열 안의 요소(값)가 순서대로 같은지 비교
+        System.out.println(Arrays.equals(numbers1, numbers2)); // true (내부 값이 10, 20, 30으로 동일)
     }
 }
